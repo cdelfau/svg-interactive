@@ -1,7 +1,10 @@
 var pic = document.getElementById('vimage');
 var clr = document.getElementById('clear');
 var mv = document.getElementById('move');
+var wid = svg.getAttribute('width');
+var hei = svg.getAttribute('height');
 var requestID;
+var run = false;
 
 var circle = function(x, y) {
     var state = 0;
@@ -68,6 +71,21 @@ var move = function() {
     };
     draw();
 };
+
+var split = function(c){
+    var rad = parseInt(c.getAttribute("r"));
+    if(rad == 2){
+	svg.removeChild(c);
+    }else{
+	var x = parseInt(c.getAttribute("cx"));
+	var y = parseInt(c.getAttribute("cy"));
+	var rx = parseInt(c.getAttribute("rx"));
+	var ry = parseInt(c.getAttribute("ry"));
+	svg.removeChild(c);
+	svg.appendChild(circle(x, y, rad/2, rx, ry));
+	svg.appendChild(circle(x, y, rad/2, -rx, -ry));
+    }
+}
 
 pic.addEventListener('click', create);
 clr.addEventListener('click', clear);
